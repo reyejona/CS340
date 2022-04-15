@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+<!-- --------------------------------SUBHEADING------------------------------------------- -->
+{% block body %}
+<div id="container">
+  <div class="left">
+    <h2>Orders</h2>
+    <p>[Create, Read, Update, and Delete for Orders]</p>
+    <p>Tracks customers to which the orders belong.</p>
+  </div>
+</div>
+<!-- -----------------------------------TABLE---------------------------------------- -->
+<table style="width: 100%">
+  <tr>
+    {% for key in orders[0].keys() %}
+    <th>{{ key }}</th>
+    {% endfor %}
+  </tr>
+  {% for order in orders %}
+  <tr>
+    {% for key in order.keys() %}
+    <td>{{order[key]}}</td>
+    {% endfor %}
+    <td>
+      <form action="{{ url_for('orders') }}" method="post"> 
+        <input class="btn" type="submit" name="VIEW" value="View">
+      </form>
+      <form action="{{ url_for('orders') }}" method="post"> 
+        <input class="btn" type="submit" name="UPDATE" value="Update">   
+      </form> 
+      <form action="{{ url_for('delete_orders', id=order.order_id) }}" method="post"> 
+        <input class="btn" type="submit" name="DELETE" value="Delete">
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<!-- ---------------------------------FORM------------------------------------------ -->
+<form id=orders action="/add_orders" method="POST">
+  <input type="text" placeholder="Customer ID" name="customer_id">
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}

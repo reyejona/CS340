@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+<!-- --------------------------------SUBHEADING------------------------------------------- -->
+{% block body %}
+<div id="container">
+  <div class="left">
+    <h2>Transactions</h2>
+    <p>[Create, Read, Update, and Delete for Transactions]</p>
+    <p>Tracks order_id, product_id, and quantity of the products. Acts as
+      an intersection table between Products and Orders.</p>
+  </div>
+</div>
+<!-- -----------------------------------TABLE---------------------------------------- -->
+<table style="width: 100%">
+  <tr>
+    {% for key in transactions[0].keys() %}
+    <th>{{ key }}</th>
+    {% endfor %}
+  </tr>
+  {% for transaction in transactions %}
+  <tr>
+    {% for key in transaction.keys() %}
+    <td>{{transaction[key]}}</td>
+    {% endfor %}
+    <td>
+      <form action="{{ url_for('transactions') }}" method="post"> 
+        <input class="btn" type="submit" name="VIEW" value="View">
+      </form>
+      <form action="{{ url_for('transactions') }}" method="post"> 
+        <input class="btn" type="submit" name="UPDATE" value="Update">   
+      </form> 
+      <form action="{{ url_for('delete_transactions', id=transaction.transaction_id) }}" method="post"> 
+        <input class="btn" type="submit" name="DELETE" value="Delete">
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<!-- ---------------------------------FORM------------------------------------------ -->
+<form id=transactions action="/add_transactions" method="POST">
+  <input type="text" placeholder="Order ID" name="order_id" required>
+  <input type="text" placeholder="Product ID" name="product_id" required>
+  <input type="text" placeholder="Quantity" name="quantity">
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+<!-- --------------------------------SUBHEADING------------------------------------------- -->
+{% block body %}
+<div id="container">
+  <div class="left">
+    <h2>Products</h2>
+    <p>[Create, Read, Update, and Delete for Products]</p>
+    <p>When a person places an order this tracks the different products in the order and quantity.</p>
+  </div>
+</div>
+<!-- -----------------------------------TABLE---------------------------------------- -->
+<table style="width: 100%">
+  <tr>
+    {% for key in products[0].keys() %}
+    <th>{{ key }}</th>
+    {% endfor %}
+  </tr>
+  {% for product in products %}
+  <tr>
+    {% for key in product.keys() %}
+    <td>{{product[key]}}</td>
+    {% endfor %}
+    <td>
+      <form action="{{ url_for('products') }}" method="post"> 
+        <input class="btn" type="submit" name="VIEW" value="View">
+      </form>
+      <form action="{{ url_for('products') }}" method="post"> 
+        <input class="btn" type="submit" name="UPDATE" value="Update">   
+      </form> 
+      <form action="{{ url_for('delete_products', id=product.product_id) }}" method="post"> 
+        <input class="btn" type="submit" name="DELETE" value="Delete">
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<!-- ---------------------------------FORM------------------------------------------ -->
+<form id=products action="/add_products" method="POST">
+  <input type="text" placeholder="Product Name" name="product_name" required>
+  <input type="text" placeholder="Unit Price" name="unit_price" required>
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}

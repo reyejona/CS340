@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+<!-- --------------------------------SUBHEADING------------------------------------------- -->
+{% block body %}
+<div id="container">
+  <div class="left">
+    <h2>Customers</h2>
+    <p>[Create, Read, Update, and Delete for Customers]</p>
+    <p>Keeps track of the customers with following attributes.</p>
+    <form id=search action="/search_customers" method="POST">
+      <input type="text" placeholder="First Name" name="first_name" required>  
+      <input type="text" placeholder="Last Name" name="last_name" required>
+      <input type="submit" value="Search">
+    </form>
+</div>
+<!-- -----------------------------------TABLE---------------------------------------- -->
+<table style="width: 100%">
+  <tr>
+    {% for key in customers[0].keys() %}
+    <th>{{ key }}</th>
+    {% endfor %}
+  </tr>
+  {% for person in customers %}
+  <tr>
+    {% for key in person.keys() %}
+    <td>{{person[key]}}</td>
+    {% endfor %}
+    <td>
+      <form action="{{ url_for('customers') }}" method="post"> 
+        <input class="btn" type="submit" name="VIEW" value="View">
+      </form>
+      <form action="{{ url_for('update_customers', id=person.customer_id) }}" method="get"> 
+        <input class="btn" type="submit" name="UPDATE" value="Update">
+      </form> 
+      <form action="{{ url_for('delete_customers', id=person.customer_id) }}" method="post"> 
+        <input class="btn" type="submit" name="DELETE" value="Delete">
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<!-- ---------------------------------FORM------------------------------------------ -->
+<form id=customers action="/add_customers" method="POST">
+  <input type="text" placeholder="First Name" name="first_name" required>
+  <input type="text" placeholder="Last Name" name="last_name" required>
+  <input type="text" placeholder="Address" name="address" required>
+  <input type="tel" placeholder="Phone Number" name="phone_number">
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}

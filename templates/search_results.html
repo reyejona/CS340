@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+<!-- --------------------------------SUBHEADING------------------------------------------- -->
+{% block body %}
+<div id="container">
+  <div class="left">
+    <h2>Customers</h2>
+    <p>[Create, Read, Update, and Delete for Customers]</p>
+    <p>Keeps track of the customers with following attributes.</p>
+  </div>
+</div>
+{% if search_customers|length == 0 %}
+<div id="container">
+    <div class="left">
+      <h2>No Customers found.</h2>
+{% else %}
+<!-- -----------------------------------TABLE---------------------------------------- -->
+<table style="width: 100%">
+    <tr>
+      {% for key in search_customers[0].keys() %}
+      <th>{{ key }}</th>
+      {% endfor %}
+    </tr>
+    {% for person in search_customers %}
+    <tr>
+      {% for key in person.keys() %}
+      <td>{{person[key]}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+{% endif %}
+{% endblock %}
